@@ -1,7 +1,7 @@
 import os
 from collections import Counter
 
-data_dir = "dataset/images"  # adjust if needed
+data_dir = "dataset_balanced"  # adjust if needed
 counts = Counter()
 
 for cls in sorted(os.listdir(data_dir)):
