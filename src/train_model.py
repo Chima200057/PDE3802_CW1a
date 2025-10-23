@@ -1,134 +1,107 @@
 import os
-import matplotlib.pyplot as plt
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.applications import MobileNetV2
-from tensorflow.keras.layers import GlobalAveragePooling2D, Dense, Dropout
-from tensorflow.keras.models import Model
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-from sklearn.metrics import classification_report, confusion_matrix
+import cv2
 import numpy as np
-import seaborn as sns
+from tensorflow.keras.applications import MobileNetV2
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.utils import to_categorical
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
 
-# ============================
-# CONFIGURATION
-# ============================
-DATASET_PATH = "../dataset_split"   
-IMG_SIZE = (256, 256)
+# Paths
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATASET_SPLIT = os.path.join(BASE_DIR, "dataset_split")
+DATASET_DIR = os.path.join(BASE_DIR, "dataset_balanced")
+MODEL_PATH = os.path.join(BASE_DIR, "office_item_classifier.h5")
+
+# Parameters
+IMG_SIZE = (224, 224)
 BATCH_SIZE = 32
-EPOCHS = 15
-MODEL_SAVE_PATH = "../office_item_classifier.h5"
+EPOCHS = 10
 
-# ============================
-# DATA PREPARATION
-# ============================
-train_dir = os.path.join(DATASET_PATH, "train")
-val_dir = os.path.join(DATASET_PATH, "val")
-test_dir = os.path.join(DATASET_PATH, "test")
+# Load data from text file
+def load_split_data(txt_file):
+    images, labels = [], []
+    with open(txt_file, "r") as f:
+        lines = f.readlines()
 
+    for line in lines:
+        rel_path = line.strip()
+        if not rel_path:
+            continue
+
+        # Split folder and file name to get the label
+        label = rel_path.split("\\")[0]  # folder name = class
+        img_path = os.path.join(DATASET_DIR, rel_path)
+
+        if not os.path.exists(img_path):
+            print(f"[WARNING] Missing file: {img_path}")
+            continue
+
+        img = cv2.imread(img_path)
+        if img is None:
+            print(f"[WARNING] Failed to read: {img_path}")
+            continue
+
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        img = cv2.resize(img, IMG_SIZE)
+        images.append(img)
+        labels.append(label)
+
+    return np.array(images), np.array(labels)
+
+# Load all sets
+print("[INFO] Loading dataset...")
+x_train, y_train = load_split_data(os.path.join(DATASET_SPLIT, "train.txt"))
+x_val, y_val = load_split_data(os.path.join(DATASET_SPLIT, "val.txt"))
+
+print(f"[INFO] Training samples: {len(x_train)}, Validation samples: {len(x_val)}")
+
+# Encode labels
+le = LabelEncoder()
+y_train_enc = to_categorical(le.fit_transform(y_train))
+y_val_enc = to_categorical(le.transform(y_val))
+
+# Normalize
+x_train = x_train / 255.0
+x_val = x_val / 255.0
+
+# Data augmentation
 train_datagen = ImageDataGenerator(
-    rescale=1./255,
-    rotation_range=25,
-    width_shift_range=0.1,
-    height_shift_range=0.1,
-    shear_range=0.1,
-    zoom_range=0.1,
-    horizontal_flip=True
-)
-val_test_datagen = ImageDataGenerator(rescale=1./255)
-
-train_gen = train_datagen.flow_from_directory(
-    train_dir, target_size=IMG_SIZE, batch_size=BATCH_SIZE, class_mode='categorical'
-)
-val_gen = val_test_datagen.flow_from_directory(
-    val_dir, target_size=IMG_SIZE, batch_size=BATCH_SIZE, class_mode='categorical'
-)
-test_gen = val_test_datagen.flow_from_directory(
-    test_dir, target_size=IMG_SIZE, batch_size=BATCH_SIZE, class_mode='categorical', shuffle=False
+    rotation_range=20,
+    width_shift_range=0.2,
+    height_shift_range=0.2,
+    shear_range=0.2,
+    zoom_range=0.2,
+    horizontal_flip=True,
+    fill_mode="nearest"
 )
 
-NUM_CLASSES = len(train_gen.class_indices)
-print(f"Classes: {train_gen.class_indices}")
+val_datagen = ImageDataGenerator()
 
-# ============================
-# MODEL BUILDING
-# ============================
-base_model = MobileNetV2(weights='imagenet', include_top=False, input_shape=(IMG_SIZE[0], IMG_SIZE[1], 3))
-base_model.trainable = False  # freeze base
+# Build model
+base_model = MobileNetV2(weights="imagenet", include_top=False, input_shape=(224, 224, 3))
+x = GlobalAveragePooling2D()(base_model.output)
+x = Dense(128, activation="relu")(x)
+output = Dense(len(le.classes_), activation="softmax")(x)
+model = Model(inputs=base_model.input, outputs=output)
 
-x = base_model.output
-x = GlobalAveragePooling2D()(x)
-x = Dense(256, activation='relu')(x)
-x = Dropout(0.4)(x)
-predictions = Dense(NUM_CLASSES, activation='softmax')(x)
+for layer in base_model.layers:
+    layer.trainable = False
 
-model = Model(inputs=base_model.input, outputs=predictions)
-model.compile(optimizer=Adam(learning_rate=1e-4),
-              loss='categorical_crossentropy',
-              metrics=['accuracy'])
+model.compile(optimizer=Adam(learning_rate=0.0001), loss="categorical_crossentropy", metrics=["accuracy"])
 
-model.summary()
-
-# ============================
-# TRAINING
-# ============================
-early_stop = EarlyStopping(monitor='val_loss', patience=3, restore_best_weights=True)
-checkpoint = ModelCheckpoint(MODEL_SAVE_PATH, monitor='val_accuracy', save_best_only=True)
-
+# Train
+print("[INFO] Training model...")
 history = model.fit(
-    train_gen,
-    validation_data=val_gen,
-    epochs=EPOCHS,
-    callbacks=[early_stop, checkpoint]
+    train_datagen.flow(x_train, y_train_enc, batch_size=BATCH_SIZE),
+    validation_data=val_datagen.flow(x_val, y_val_enc, batch_size=BATCH_SIZE),
+    epochs=EPOCHS
 )
 
-# ============================
-# EVALUATION
-# ============================
-test_loss, test_acc = model.evaluate(test_gen)
-print(f"Test Accuracy: {test_acc:.4f}")
-
-# Generate predictions
-preds = model.predict(test_gen)
-y_pred = np.argmax(preds, axis=1)
-y_true = test_gen.classes
-labels = list(test_gen.class_indices.keys())
-
-print("\nClassification Report:")
-print(classification_report(y_true, y_pred, target_names=labels))
-
-# Confusion Matrix
-cm = confusion_matrix(y_true, y_pred)
-plt.figure(figsize=(10, 8))
-sns.heatmap(cm, annot=True, fmt='d', xticklabels=labels, yticklabels=labels, cmap='Blues')
-plt.title("Confusion Matrix")
-plt.xlabel("Predicted")
-plt.ylabel("True")
-plt.tight_layout()
-plt.savefig("../confusion_matrix.png")
-plt.close()
-
-# ============================
-# TRAINING PLOTS
-# ============================
-plt.figure(figsize=(8, 6))
-plt.plot(history.history['accuracy'], label='train_acc')
-plt.plot(history.history['val_accuracy'], label='val_acc')
-plt.title("Accuracy Over Epochs")
-plt.xlabel("Epochs")
-plt.ylabel("Accuracy")
-plt.legend()
-plt.savefig("../training_accuracy.png")
-plt.close()
-
-plt.figure(figsize=(8, 6))
-plt.plot(history.history['loss'], label='train_loss')
-plt.plot(history.history['val_loss'], label='val_loss')
-plt.title("Loss Over Epochs")
-plt.xlabel("Epochs")
-plt.ylabel("Loss")
-plt.legend()
-plt.savefig("../training_loss.png")
-plt.close()
-
-print("✅ Training complete. Model saved to:", MODEL_SAVE_PATH)
+# Save
+model.save(MODEL_PATH)
+print(f"[INFO] Model saved to {MODEL_PATH}")
+print(f"[INFO] Classes: {le.classes_}")
