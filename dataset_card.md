@@ -3,13 +3,17 @@ A small image classification dataset of common office items collected for the PD
 
 Dataset structure:
 dataset/
-  ├─ phone/
+  ├─ book
   ├─ bottle/
+  ├─ chair/
+  ├─ desk/
   ├─ keyboard/
+  ├─ laptop/
   ├─ mouse/
+  ├─ phone/
   ├─ stapler/
-  ├─ book/
-
+  ├─trashcan/
+  
 Number of classes: 10.
 
 Number of images : 10000 total (1000 per class) — see dataset_balanced/ and dataset_split/ for exact train/val/test splits.
