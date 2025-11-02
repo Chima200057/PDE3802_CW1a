@@ -20,15 +20,16 @@ This project implements a single-object office item classifier. It accepts eithe
 
 # Installation
 Recommended: use a Python 3.10+ virtual environment.
-1.	Clone the repository:
-git clone https://github.com/Chima200057/PDE3802_CW1a.git
-cd PDE3802_CW1a
+1. Clone the repository:
+- git clone https://github.com/Chima200057/PDE3802_CW1a.git
+- cd PDE3802_CW1a
 2.	(Optional) Create and activate a virtual environment:
-python -m venv .venv
-# Windows
-.\.venv\Scripts\activate
-# macOS / Linux
-source .venv/bin/activate
+- python -m venv .venv
+
+- For Windows:
+ - .\.venv\Scripts\activate
+- For macOS / Linux
+ - source .venv/bin/activate
 3.	Install requirements:
 pip install -r requirements.txt
 Note: requirements.txt typically includes: tensorflow, opencv-python, numpy, matplotlib, scikit-learn, pandas.
