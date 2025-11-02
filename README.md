@@ -22,9 +22,11 @@ This project implements a single-object office item classifier. It accepts eithe
 
 # Installation
 Recommended: use a Python 3.10+ virtual environment.
-1. Clone the repository:
-- git clone https://github.com/Chima200057/PDE3802_CW1a.git
-- cd PDE3802_CW1a
+### Step 1: Clone the repository:
+```bash
+git clone https://github.com/Chima200057/PDE3802_CW1a.git
+cd PDE3802_CW1a
+```
 2.	(Optional) Create and activate a virtual environment:
 - python -m venv .venv
 
