@@ -1,3 +1,5 @@
+> NOTE: The repository is public for academic review only and may be made private after grading.
+
 # Collaborators
 1. Chimaraoke Mbata Benjamin Collins - M00909998 - cm1833live.mdx.ac.uk (chima200057 - GitHub)
 2. Kingsley-Ogarashi Samuel Chukwuemeka - M00931065 (buda360 - GitHub)
@@ -56,7 +58,7 @@ There is a quick and easy to use GUI script to run inference on an image(be it l
 # Training (reproduce / fine-tune)
 Note: training was performed with TensorFlow 2.x. If you want to retrain or fine-tune:
 - python src/train_model.py (You might have to rename the expected model output name if you do not want to lose the original)
-> Key training options are in src/train.py. Preprocessing resizes images to 224×224 and normalizes to [0,1]. Data augmentation applied during training: random flip, rotation ±15°, brightness jitter.
+> Key training options are in src/train.py. Preprocessing resizes images to 256x256 and normalizes to [0,1]. Data augmentation applied during training: random flip, rotation ±15°, brightness jitter.
 
 
 # Evaluation
@@ -75,7 +77,7 @@ Evaluate on the held-out test set:
 - Ensure camera index is correct (--camera 0 or --camera 1). Close other apps using the camera.
 - On Linux, ensure you have permissions to access /dev/video*.
 3. Incorrect labels / low confidence
-- Check image preprocessing: resizing and normalization must match the model training pipeline (224×224, scale to [0,1]).
+- Check image preprocessing: resizing and normalization must match the model training pipeline (256x256, scale to [0,1]).
 - Try running inference with multiple frames averaged to improve confidence.
 4. TensorFlow version mismatch
 - If loading the model throws errors, confirm TensorFlow version in requirements.txt. If the model was saved with TF 2.11, use a compatible TF release.
@@ -96,7 +98,5 @@ Evaluate on the held-out test set:
 
 
 
-
-
-Acknowledgements
-This project was prepared for PDE 3802 — Artificial Intelligence (in Robotics) 2025–26 coursework 1 By Chimaraoke Mbata & Samuel Ogarashi. The implementation uses public open-source libraries (TensorFlow, OpenCV). 
+# Acknowledgements
+This project was prepared for PDE 3802 — Artificial Intelligence (in Robotics) 2025–26 coursework 1 By Chimaraoke Mbata Benjamin Collins & Kingsley-Ogarashi Samuel Chukwuemeka. The implementation uses public open-source libraries (TensorFlow, OpenCV). 
