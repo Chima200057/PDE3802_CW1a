@@ -1,21 +1,21 @@
 # Collaborators
-Chimaraoke Mbata Benjamin Collins - M00909998 - cm1833live.mdx.ac.uk (chima200057 - GitHub)
-Kingsley-Ogarashi Samuel Chukwuemeka - M00931065 (buda360 - GitHub)
+1. Chimaraoke Mbata Benjamin Collins - M00909998 - cm1833live.mdx.ac.uk (chima200057 - GitHub)
+2. Kingsley-Ogarashi Samuel Chukwuemeka - M00931065 (buda360 - GitHub)
 
-Office Item Classifier — PDE3802_CW1a
-Repository: https://github.com/Chima200057/PDE3802_CW1a
-Framework: TensorFlow / Keras, OpenCV, NumPy
-Model file included: office_item_classifier.h5
+# Office Item Classifier — PDE3802_CW1a
+- Repository: https://github.com/Chima200057/PDE3802_CW1a
+- Framework: TensorFlow / Keras, OpenCV, NumPy
+- Model file included: office_item_classifier.h5
 
 # Overview
 This project implements a single-object office item classifier. It accepts either an image file or a webcam frame and outputs a predicted class label and confidence score. The training pipeline, dataset, evaluation scripts, and a saved model are included.
-Contents
-•	src/ — source code: training, inference, utilities.
-•	dataset/, dataset_balanced/, dataset_split/ — dataset folders and prepared splits.
-•	office_item_classifier.h5 — trained TensorFlow model (weights + architecture).
-•	confusion_matrix.png — confusion matrix for held-out test set.
-•	classification_report.txt — accuracy, precision, recall, F1 metrics.
-•	requirements.txt — Python dependencies.
+- Contents
+1. src/ — source code: training, inference, utilities.
+2. dataset/, dataset_balanced/, dataset_split/ — dataset folders and prepared splits.
+3. office_item_classifier.h5 — trained TensorFlow model (weights + architecture).
+4. confusion_matrix.png — confusion matrix for held-out test set.
+5. classification_report.txt — accuracy, precision, recall, F1 metrics.
+6. requirements.txt — Python dependencies.
 
 
 # Installation
