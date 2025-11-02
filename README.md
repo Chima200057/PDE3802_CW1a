@@ -32,8 +32,8 @@ Recommended: use a Python 3.10+ virtual environment.
  - source .venv/bin/activate
 3.	Install requirements:
 - pip install -r requirements.txt
-- Note: requirements.txt typically includes: tensorflow, opencv-python, numpy, matplotlib, scikit-learn, pandas.
-- If you have GPU and want TensorFlow-GPU, install the appropriate tensorflow package for your CUDA/CuDNN versions.
+> Note: requirements.txt typically includes: tensorflow, opencv-python, numpy, matplotlib, scikit-learn, pandas.
+> If you have GPU and want TensorFlow-GPU, install the appropriate tensorflow package for your CUDA/CuDNN versions.
 
 
 # Quick start — Interface
@@ -56,7 +56,7 @@ There is a quick and easy to use GUI script to run inference on an image(be it l
 # Training (reproduce / fine-tune)
 Note: training was performed with TensorFlow 2.x. If you want to retrain or fine-tune:
 - python src/train_model.py (You might have to rename the expected model output name if you do not want to lose the original)
-- Key training options are in src/train.py. Preprocessing resizes images to 224×224 and normalizes to [0,1]. Data augmentation applied during training: random flip, rotation ±15°, brightness jitter.
+> Key training options are in src/train.py. Preprocessing resizes images to 224×224 and normalizes to [0,1]. Data augmentation applied during training: random flip, rotation ±15°, brightness jitter.
 
 
 # Evaluation
@@ -68,32 +68,31 @@ Evaluate on the held-out test set:
 > The repository already includes classification_report.txt and confusion_matrix.png generated for the saved model.
 
 
-Troubleshooting
+# Troubleshooting
 1. Model file too large / memory errors
-•	If office_item_classifier.h5 fails to load due to memory constraints, try running on smaller batch sizes or switch to CPU-only: export CUDA_VISIBLE_DEVICES="" (Linux/macOS) or set environment variable in Windows PowerShell.
+- If office_item_classifier.h5 fails to load due to memory constraints, try running on smaller batch sizes or switch to CPU-only: export CUDA_VISIBLE_DEVICES="" (Linux/macOS) or set environment variable in Windows PowerShell.
 2. Webcam not opening
-•	Ensure camera index is correct (--camera 0 or --camera 1). Close other apps using the camera.
-•	On Linux, ensure you have permissions to access /dev/video*.
+- Ensure camera index is correct (--camera 0 or --camera 1). Close other apps using the camera.
+- On Linux, ensure you have permissions to access /dev/video*.
 3. Incorrect labels / low confidence
-•	Check image preprocessing: resizing and normalization must match the model training pipeline (224×224, scale to [0,1]).
-•	Try running inference with multiple frames averaged to improve confidence.
+- Check image preprocessing: resizing and normalization must match the model training pipeline (224×224, scale to [0,1]).
+- Try running inference with multiple frames averaged to improve confidence.
 4. TensorFlow version mismatch
-•	If loading the model throws errors, confirm TensorFlow version in requirements.txt. If the model was saved with TF 2.11, use a compatible TF release.
+- If loading the model throws errors, confirm TensorFlow version in requirements.txt. If the model was saved with TF 2.11, use a compatible TF release.
 5. Missing dependencies
-•	pip install -r requirements.txt should install all required packages. If a package fails, try upgrading pip: python -m pip install --upgrade pip then reinstall.
+- pip install -r requirements.txt should install all required packages. If a package fails, try upgrading pip: python -m pip install --upgrade pip then reinstall.
 
 
-Results & Error analysis (brief)
-Reported metrics (held-out test set):
-•	Accuracy: 0.94 (example; see classification_report.txt for exact values)
-•	Macro F1: 0.93
-Confusion matrix: confusion_matrix.png (included). Observations:
-•	The model frequently confuses mouse and keyboard when only partial views are present.
-•	bottle vs mug errors occur when the top of the object is occluded.
-Error analysis notes & fixes:
-•	Add more images with occlusions and varied viewpoints for mouse and keyboard classes.
-•	Collect additional images in low-light and cluttered backgrounds.
-•	Consider fine-tuning with a small object detector (e.g., YOLO) to crop object region before classification.
+# Results & Error analysis
+1. Reported metrics (held-out test set):
+- Accuracy: 0.94 (example; see classification_report.txt for exact values)
+- Macro F1: 0.93
+2. Confusion matrix: confusion_matrix.png (included). Observations:
+- The model frequently confuses laptop and keyboard when only partial views are present.
+3. Error analysis notes & fixes:
+- Add more images with occlusions and varied viewpoints for laptop and keyboard classes.
+- Collect additional images in low-light and cluttered backgrounds.
+
 
 
 
