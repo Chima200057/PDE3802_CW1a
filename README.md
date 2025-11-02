@@ -27,15 +27,23 @@ Recommended: use a Python 3.10+ virtual environment.
 git clone https://github.com/Chima200057/PDE3802_CW1a.git
 cd PDE3802_CW1a
 ```
-2.	(Optional) Create and activate a virtual environment:
+### Step 2(Optional): Create and activate a virtual environment:
+```bash
 - python -m venv .venv
+```
 
-- For Windows:
- - .\.venv\Scripts\activate
-- For macOS / Linux:
- - source .venv/bin/activate
-3.	Install requirements:
-- pip install -r requirements.txt
+#### For Windows:
+```bash
+.\.venv\Scripts\activate
+ ```
+#### For macOS / Linux:
+```bash
+source .venv/bin/activate
+ ```
+### Step 3: Install requirements:
+```bash
+pip install -r requirements.txt
+```
 > Note: requirements.txt typically includes: tensorflow, opencv-python, numpy, matplotlib, scikit-learn, pandas.
 > If you have GPU and want TensorFlow-GPU, install the appropriate tensorflow package for your CUDA/CuDNN versions.
 
@@ -43,7 +51,7 @@ cd PDE3802_CW1a
 # Quick start — Interface
 There is a quick and easy to use GUI script to run inference on an image(be it local or live).
 
-1. Example: predict a local single file
+### Predict a local single image
 - python src/gui1_predict_office_item.py
 - Select "Test Single Image " option
 - Select a local image from your system
@@ -51,7 +59,7 @@ There is a quick and easy to use GUI script to run inference on an image(be it l
 - Input: book1.jpg(example)
 - Prediction: book (confidence: 92%)
 
-2. Example: predict a live single file
+### Predict a live single image
 - python src/gui1_predict_office_item.py
 - Select "Start Webcam" option (press q to quit):
 - The program will show a live video window, detect the most prominent item in the center (single object assumption) and display the predicted class + confidence in the window.
