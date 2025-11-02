@@ -1,12 +1,13 @@
-Chimaraoke Mbata Benjamin Collins - M00909998 - cm1833live.mdx.ac.uk
-Kingsley-Ogarashi Samuel Chukwuemeka - M00931065
+# Collaborators
+Chimaraoke Mbata Benjamin Collins - M00909998 - cm1833live.mdx.ac.uk (chima200057 - GitHub)
+Kingsley-Ogarashi Samuel Chukwuemeka - M00931065 (buda360 - GitHub)
 
 Office Item Classifier — PDE3802_CW1a
 Repository: https://github.com/Chima200057/PDE3802_CW1a
 Framework: TensorFlow / Keras, OpenCV, NumPy
 Model file included: office_item_classifier.h5
 
-Overview
+# Overview
 This project implements a single-object office item classifier. It accepts either an image file or a webcam frame and outputs a predicted class label and confidence score. The training pipeline, dataset, evaluation scripts, and a saved model are included.
 Contents
 •	src/ — source code: training, inference, utilities.
@@ -17,7 +18,7 @@ Contents
 •	requirements.txt — Python dependencies.
 
 
-Installation
+# Installation
 Recommended: use a Python 3.10+ virtual environment.
 1.	Clone the repository:
 git clone https://github.com/Chima200057/PDE3802_CW1a.git
