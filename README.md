@@ -2,7 +2,7 @@
 
 # Collaborators
 1. Chimaraoke Mbata Benjamin Collins - M00909998 - cm1833live.mdx.ac.uk (chima200057 - GitHub)
-2. Kingsley-Ogarashi Samuel Chukwuemeka - M00931065 (buda360 - GitHub)
+2. Kingsley-Ogarashi Samuel Chukwuemeka - M00931065 - sk2427@live.mdx.ac.uk (buda360 - GitHub) 
 
 # Office Item Classifier — PDE3802_CW1a
 - Repository: https://github.com/Chima200057/PDE3802_CW1a
@@ -29,7 +29,7 @@ cd PDE3802_CW1a
 ```
 ### Step 2(Optional): Create and activate a virtual environment:
 ```bash
-- python -m venv .venv
+python -m venv .venv
 ```
 
 #### For Windows:
@@ -74,7 +74,7 @@ Note: training was performed with TensorFlow 2.x. If you want to retrain or fine
 # Evaluation
 Evaluate on the held-out test set:
 - python src/evaluate_model.py
-1. Expected outputs (included):
+#### Expected outputs:
 - classification_report.txt — includes accuracy and per-class precision/recall/F1. 
 - confusion_matrix.png — visual confusion matrix saved to disk.
 > The repository already includes classification_report.txt and confusion_matrix.png generated for the saved model.
