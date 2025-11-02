@@ -28,7 +28,7 @@ Recommended: use a Python 3.10+ virtual environment.
 
 - For Windows:
  - .\.venv\Scripts\activate
-- For macOS / Linux
+- For macOS / Linux:
  - source .venv/bin/activate
 3.	Install requirements:
 - pip install -r requirements.txt
@@ -56,18 +56,16 @@ There is a quick and easy to use GUI script to run inference on an image(be it l
 # Training (reproduce / fine-tune)
 Note: training was performed with TensorFlow 2.x. If you want to retrain or fine-tune:
 - python src/train_model.py (You might have to rename the expected model output name if you do not want to lose the original)
-Key training options are in src/train.py. Preprocessing resizes images to 224×224 and normalizes to [0,1]. Data augmentation applied during training: random flip, rotation ±15°, brightness jitter.
+- Key training options are in src/train.py. Preprocessing resizes images to 224×224 and normalizes to [0,1]. Data augmentation applied during training: random flip, rotation ±15°, brightness jitter.
 
 
-Evaluation
+# Evaluation
 Evaluate on the held-out test set:
-python src/evaluate.py --model office_item_classifier.h5 --test_dir dataset_split/test --report out/classification_report.txt --confusion out/confusion_matrix.png
-Expected outputs (included):
-•	classification_report.txt — includes accuracy and per-class precision/recall/F1. Reported (example):
-o	Test accuracy: 0.94
-o	Macro F1: 0.93
-•	confusion_matrix.png — visual confusion matrix saved to disk.
-The repository already includes classification_report.txt and confusion_matrix.png generated for the saved model.
+- python src/evaluate_model.py
+1. Expected outputs (included):
+- classification_report.txt — includes accuracy and per-class precision/recall/F1. 
+- confusion_matrix.png — visual confusion matrix saved to disk.
+> The repository already includes classification_report.txt and confusion_matrix.png generated for the saved model.
 
 
 Troubleshooting
