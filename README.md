@@ -1,7 +1,7 @@
 > NOTE: The repository is public for academic review only and may be made private after grading.
 
 # Collaborators
-1. Chimaraoke Mbata Benjamin Collins - M00909998 - cm1833live.mdx.ac.uk (chima200057 - GitHub)
+1. Chimaraoke Mbata Benjamin Collins - M00909998 - cm1833@live.mdx.ac.uk (chima200057 - GitHub)
 2. Kingsley-Ogarashi Samuel Chukwuemeka - M00931065 - sk2427@live.mdx.ac.uk (buda360 - GitHub) 
 
 # Office Item Classifier — PDE3802_CW1a
