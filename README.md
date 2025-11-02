@@ -9,7 +9,7 @@
 
 # Overview
 This project implements a single-object office item classifier. It accepts either an image file or a webcam frame and outputs a predicted class label and confidence score. The training pipeline, dataset, evaluation scripts, and a saved model are included.
-- Contents
+- Contents:
 1. src/ — source code: training, inference, utilities.
 2. dataset/, dataset_balanced/, dataset_split/ — dataset folders and prepared splits.
 3. office_item_classifier.h5 — trained TensorFlow model (weights + architecture).
@@ -31,31 +31,31 @@ Recommended: use a Python 3.10+ virtual environment.
 - For macOS / Linux
  - source .venv/bin/activate
 3.	Install requirements:
-pip install -r requirements.txt
-Note: requirements.txt typically includes: tensorflow, opencv-python, numpy, matplotlib, scikit-learn, pandas.
-If you have GPU and want TensorFlow-GPU, install the appropriate tensorflow package for your CUDA/CuDNN versions.
+- pip install -r requirements.txt
+- Note: requirements.txt typically includes: tensorflow, opencv-python, numpy, matplotlib, scikit-learn, pandas.
+- If you have GPU and want TensorFlow-GPU, install the appropriate tensorflow package for your CUDA/CuDNN versions.
 
 
-Quick start — Interface
+# Quick start — Interface
 There is a quick and easy to use GUI script to run inference on an image(be it local or live).
 
-# Example: predict a local single file
-python src/gui1_predict_office_item.py
-Select "Test Single Image " option
-Select a local image from your system
-Expected output (console):
-Input: examples/book1.jpg
-Prediction: book (confidence: 92%)
+1. Example: predict a local single file
+- python src/gui1_predict_office_item.py
+- Select "Test Single Image " option
+- Select a local image from your system
+- Expected output (console):
+- Input: book1.jpg(example)
+- Prediction: book (confidence: 92%)
 
-# Example: predict a live single file
-python src/gui1_predict_office_item.py
-Select "Start Webcam" option (press q to quit):
-The program will show a live video window, detect the most prominent item in the center (single object assumption) and display the predicted class + confidence in the window.
+2. Example: predict a live single file
+- python src/gui1_predict_office_item.py
+- Select "Start Webcam" option (press q to quit):
+- The program will show a live video window, detect the most prominent item in the center (single object assumption) and display the predicted class + confidence in the window.
 
 
-Training (reproduce / fine-tune)
+# Training (reproduce / fine-tune)
 Note: training was performed with TensorFlow 2.x. If you want to retrain or fine-tune:
-python src/train_model.py --data_dir dataset_split/train --val_dir dataset_split/val --epochs 25 --batch_size 32 --save_model runs/office_model.h5
+- python src/train_model.py (You might have to rename the expected model output name if you do not want to lose the original)
 Key training options are in src/train.py. Preprocessing resizes images to 224×224 and normalizes to [0,1]. Data augmentation applied during training: random flip, rotation ±15°, brightness jitter.
 
 
