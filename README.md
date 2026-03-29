@@ -1,11 +1,4 @@
-> NOTE: The repository is public for academic review only and may be made private after grading.
-
-# Collaborators
-1. Chimaraoke Mbata Benjamin Collins - M00909998 - cm1833@live.mdx.ac.uk (chima200057 - GitHub)
-2. Kingsley-Ogarashi Samuel Chukwuemeka - M00931065 - sk2427@live.mdx.ac.uk (buda360 - GitHub) 
-
-# Office Item Classifier — PDE3802_CW1a
-- Repository: https://github.com/Chima200057/PDE3802_CW1a
+# Office Item Classifier 
 - Framework: TensorFlow / Keras, OpenCV, NumPy
 - Model file included: office_item_classifier.h5
 
@@ -108,5 +101,3 @@ Evaluate on the held-out test set:
 
 
 
-# Acknowledgements
-This project was prepared for PDE 3802 — Artificial Intelligence (in Robotics) 2025–26 coursework 1 By Chimaraoke Mbata Benjamin Collins & Kingsley-Ogarashi Samuel Chukwuemeka. The implementation uses public open-source libraries (TensorFlow, OpenCV). 
